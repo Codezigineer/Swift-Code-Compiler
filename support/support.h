@@ -12,7 +12,7 @@
 // First, The header. Not written by apple.
 struct macho_support
 {
-	mach_header mach_header; // The header part 
+	std::uint32_t mach_header; // The header part 
 	// of the Mach-O File to Tell the kernel it is a valid
 	// Mach-O File.
 
