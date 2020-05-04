@@ -2,7 +2,8 @@
 #include <string>
 #include "compile.h" // We Use compiling stuff.
 
-int main() {
+int main() 
+{
   std::cout << "Hello!\n";
   std::cout << "Welcome To the Swift Code Compiler!\n";
   std::cout << "Enter run, then hit enter to run.\n";

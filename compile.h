@@ -1,9 +1,11 @@
-// we do not just have main.cpp.
+ // we do not just have main.cpp.
 #ifndef COMPILE_H
 
 // including in headers.
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include "support/support.h" // we import support for different executables.
 
 // of Course We add header gaurds.
 #define COMPILE_H
@@ -40,6 +42,30 @@ namespace compile // namespace for compiling.
     // Working on this.
 
     // Tell the user if the program is ran. The Function compile::check_syntax() will say any syntax errors.
+  }
+
+	// Namespace for callbacks. Why callbacks are useful:
+	// 		(1 They allow use to talk to 
+	// 			the linker to link the code.
+	//		(2 They allow use to get and 
+	//			recieve information.
+  namespace callbacks 
+  {
+	  struct callback
+	  {
+		std::uint32_t callback_ = 0;
+		std::uint32_t callback_input = 0;
+		int callback__ = static_cast<int>(callback_);
+	  };
+	  int callback(int input, int callbacktype)
+	  {
+		  int output; // Uninitalized because there is 
+		  // no output for now.
+
+		switch(callbacktype)
+		  output = static_cast<int>('a');
+		  return output;
+	  }
   }
 }
 
