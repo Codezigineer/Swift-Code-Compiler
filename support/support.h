@@ -3,13 +3,73 @@
 
 // Headers.
 #include <cstdlib>
+#include <iostream>
+#include <fstream>
  
 // This is For OSX Support. That is because this
 // project is on GitHub.
 // This was a project that needs to be supported in 
 // OSX. Now, This will give it Support.
 
-// First, The header. Not written by apple.
+struct macho_compiler_loader // Every struct in this file with a _support suffix.
+{
+	fstream mach_compiler_load_zip_file; // There Are Load Files To help The compiler Load The Files. They Are Stored in Zip Files.
+	
+	fstream mach_compiler_load_session_zip_file; // There Are Also Session Log Files So that you can get 
+	// your history of compiler sessions. (In Zip Files, Too.
+	
+	mach_compiler_load_zip_file.open("mach_compiler_load.zip"); // Finally, The Zip File.
+	
+	mach_compiler_load_session_zip_file.open("mach_compiler_session_load.zip"); // Now, Finally, The Second Zip File.
+	
+	if(!mach_compiler_load_zip_file)
+		mach_compiler_load_zip_file.open("mach_compiler_load.zip"); // We retry To Make The Load Zip File.
+	else if(!mach_compiler_load_session_zip_file)
+		mach_compiler_load_session_zip_file.open("mach_compiler_session_load.zip"); // We retry To Make The Session History Zip file.
+	
+	mach_compiler_load_zip_file << "PK"
+		""
+		""
+		""; // we Leave It Empty Because, When You first use it, There Is No Loading, Yet.
+	
+	mach_compiler_load_session_zip_file << "PK"
+		""
+		""
+		""; // We Also Leave it Empty, Because There Is No History, Yet.
+	
+	// (Both Files Are Read, And Whatever Contents They have By Reading It, They Get Sent To The Compiler.)
+	// We Never Close the Files. They Are essential, And if You Delete Them, The Compiler Does Not Compile (What it Is Supposed to.)
+	// Why We Need Session Log Files, Is So That When We Reopen a Compiler saved project, The Compiler Has To remember Everything.
+	
+	
+};
+
+struct portableexec_compiler_loader // If You Read The Comment At (Ln 16, Col 30), You Know What This Is.
+{
+	fstream portableexec_compiler_load_zip_file; 
+	
+	fstream portableexec_compiler_load_session_zip_file; 
+	
+	portableexec_compiler_load_zip_file.open("mach_compiler_load.zip"); // Finally, The Zip File.
+	
+	portableexec_compiler_load_session_zip_file.open("mach_compiler_session_load.zip"); 
+	
+	if(!portableexec_compiler_load_zip_file)
+		mach_compiler_load_zip_file.open("mach_compiler_load.zip"); 
+	else if(!portableexec_compiler_load_session_zip_file)
+		mach_compiler_load_session_zip_file.open("mach_compiler_session_load.zip"); 
+	
+	portableexec_compiler_load_zip_file << "PK"
+		""
+		""
+		""; 
+	
+	portableexec_compiler_load_session_zip_file << "PK"
+		""
+		""
+		""; // We Also Leave it Empty, Because There Is No History, Yet.
+}
+
 struct macho_support
 {
 	std::uint32_t mach_header; // The header part 
@@ -18,7 +78,8 @@ struct macho_support
 
 	std::uint32_t mach_load_commands;  // The load commands.
 	std::uint32_t mach_code; // Actual code in the Mach-O File.
-
+	
+	macho_compiler_loader machocomploader; // We Now Implemented The Mach-O Compiler Loader In.
 };
 
 struct portableexec_support
@@ -104,7 +165,9 @@ struct portableexec_support
 	// a section must be loaded contiguously. In
 	// addition, an image file can contain a number of
 	// sections, such as .tls or .reloc , which have special purposes. 
-
+	
+	portableexec_compiler_loader portableexec_compiler_loader; // Finally, The Compiler Loader (For PE-Formatted, In Which, Is for Windows.)
+	
 	// (all references come from https://docs.microsoft.com/en-us/windows/win32/debug/pe-format.)
 };
 
