@@ -3,7 +3,8 @@ version: 2.1
 # Use a package of configuration called an orb.
 orbs:
   # Declare a dependency on the startcomp
-  welcome: circleci/startcomp-orb@0.4.1
+  startcomp: circleci/startcomp-orb@0.4.1
+  welcomelang: circleci/welcomelang-orb@0.4.1
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "startcomp-run"
@@ -11,3 +12,7 @@ workflows:
     # Run the startcomp-run/run job in its own container
     jobs:
       - startcomp-orb/run
+  welcomelang:
+
+    jobs:
+      - welocmelang-orb/run
